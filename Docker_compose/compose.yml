@@ -1,0 +1,11 @@
+
+services:
+  c1:
+    container_name: "dipakOS1"
+    image: "ubuntu:14.04"
+    command: "date"
+
+  c2:
+    container_name: "dipakOS2"
+    image: "centos:7"
+    command: "cal"
