@@ -1,0 +1,9 @@
+services:
+  app:
+    image: nginx
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
