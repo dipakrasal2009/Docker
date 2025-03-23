@@ -1,9 +1,10 @@
 
 services:
   c1:
-    container_name: "dipakOS1"
+    # container_name: "dipakOS1"
     image: "ubuntu:14.04"
     command: "date"
+    
 
   c2:
     container_name: "dipakOS2"
@@ -12,5 +13,5 @@ services:
 
   c3:
     container_name: "dipakos3"
-    image: redhat/ubi8
+    image: "redhat/ubi8"
     command: "ls"

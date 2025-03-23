@@ -1,0 +1,7 @@
+
+services:
+    image: ubuntu:14.04
+    ports:
+      - "8080:80"
+    volumes:
+      - /home/hppc/Dipak
