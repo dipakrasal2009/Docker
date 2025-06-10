@@ -1,0 +1,4 @@
+services:
+  c1:
+    container_name: "os1"
+    image: "ubuntu:14.04"

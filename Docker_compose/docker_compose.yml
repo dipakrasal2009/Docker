@@ -1,0 +1,63 @@
+version: "3.9"    # Docker Compose file format version
+
+# Define services
+services:
+  web:
+    image: nginx:latest       # Use NGINX official image
+    container_name: nginx_web
+    ports:
+      - "8080:80"             # Map host port 8080 to container port 80
+    volumes:
+      - ./html:/usr/share/nginx/html:ro   # Mount volume with read-only access
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    restart: always            # Restart policy: no, always, on-failure, unless-stopped
+    healthcheck:               # Health check configuration
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app_network            # Connect to a custom network
+    depends_on:
+      - db                     # Wait until the db service starts
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: on-failure
+    networks:
+      - app_network
+
+  cache:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=redispass
+    command: redis-server --requirepass redispass
+    networks:
+      - app_network
+    restart: unless-stopped
+
+# Define volumes
+volumes:
+  mysql_data:    # Persistent volume for MySQL database
+    driver: local
+
+# Define networks
+networks:
+  app_network:
+    driver: bridge
+

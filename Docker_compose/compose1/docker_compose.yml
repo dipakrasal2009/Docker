@@ -1,0 +1,5 @@
+services:
+  c1:
+    container_name: "ubuntu1"
+    image: "ubuntu:14.04"
+    command: "cal"
